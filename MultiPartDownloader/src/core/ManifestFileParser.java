@@ -47,7 +47,9 @@ public class ManifestFileParser {
 	}
 
 	/*
+	 * 
 	 * Function To parse String Array list
+	 * 
 	 */
 	public void parseArreylist(ArrayList<String> manifest) throws IOException {
 
