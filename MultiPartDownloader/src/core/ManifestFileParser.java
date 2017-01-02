@@ -19,7 +19,7 @@ public class ManifestFileParser {
 	Logger logger = Logger.getLogger(Segment.class);
 
 	/*
-	 * Function To convert inputStreamfile String ArrayList and removing ** from
+	 * Function To convert inputStreamfile String ArrayList 
 	 * file
 	 */
 
