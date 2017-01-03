@@ -69,6 +69,7 @@ public class ManifestFileParser {
 			if (str.contains(".segments")) {
 				path = path.substring(0, path.length() - 9);
 				logger.debug("String path after deleteing Suffixes is " + str);
+				
 
 				// TODO create manifestInputStream
 				// TODO getArreyListFromInputStreamFile
