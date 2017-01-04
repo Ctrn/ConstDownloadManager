@@ -16,11 +16,10 @@ import org.apache.log4j.Logger;
 
 public class ManifestFileParser {
 
-	Logger logger = Logger.getLogger(Segment.class);
+	 Logger logger = Logger.getLogger(Segment.class);
 
 	/*
-	 * Function To convert inputStreamfile String ArrayList 
-	 * file
+	 * Function To convert inputStreamfile String ArrayList file
 	 */
 
 	public ArrayList<String> getArreyListFromInputStreamFile(InputStream manifestFile) {
@@ -32,9 +31,10 @@ public class ManifestFileParser {
 
 		BufferedReader r = new BufferedReader(new InputStreamReader(manifestFile));
 		try {
-			while ((line = r.readLine()) != null ) {
+			while ((line = r.readLine()) != null) {
 				logger.debug("File Line is" + line);
 				manifestArreyString.add(line);
+
 				line = "";
 
 			}
@@ -42,43 +42,105 @@ public class ManifestFileParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return manifestArreyString;
 
 	}
- 
+
+	/**
+	 * This Method with create arraylist of arraylist without ** the main
+	 * purpose Mirror
+	 * 
+	 * @param manifestFile
+	 * @return ArrayList<ArrayList<String>>
+	 */
+
+	 public static  ArrayList<ArrayList<String>> geMDtArreyListFromArrayList(ArrayList<String> manifestFile) {
+
+		ArrayList<ArrayList<String>> outer = new ArrayList<ArrayList<String>>();
+		ArrayList<String> inner = new ArrayList<String>();
+
+		for (int i = 0; i < manifestFile.size(); i++) {
+
+			while (i < manifestFile.size() && !(manifestFile.get(i).equals("**"))) {
+
+				inner.add(manifestFile.get(i));
+				System.out.println(manifestFile.get(i));
+				i++;
+			}
+
+			outer.add(inner);
+			inner.clear();
+			;
+
+		}
+		
+		return outer;
+	}
+
+	public void printArraylist(ArrayList<ArrayList<String>> manifestFile) {
+
+		// ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
+
+		for (ArrayList<String> i : manifestFile) { // iterate -list by list
+			System.out.println(i);
+			/*
+			 * for (String str : i) {// iterate element by element in a list
+			 * System.out.println(str); System.out.println(","); }
+			 */
+
+		}
+	}
+
 	/*
 	 * Function To parse String Array list
 	 * 
 	 */
-	public void parseArreylist(ArrayList<String> manifest) throws IOException {
+	public  void parseArreylist(ArrayList<ArrayList<String>> manifest) throws IOException {
 
-		logger.debug("You are in parseArreylist Method ");
+		//.debug("You are in parseArreylist Method ");
 
-		for (String str : manifest) {
+		if (manifest.isEmpty() || manifest == null) {
+			// nothing to do
 
-			logger.debug("String is  " + str);
-			String path = new URL(str).getPath();
-			logger.debug("String path  is " + str);
-			
-			if (str.contains("-segment")) {
-				path = path.substring(0, path.length() - 9);
-				logger.debug("String path after deleteing Suffixes is " + str);
-
-				// TODO download this path
-			}
-			if (str.contains(".segments")) {
-				path = path.substring(0, path.length() - 9);
-				logger.debug("String path after deleteing Suffixes is " + str);
-				
-
-				// TODO create manifestInputStream
-				// TODO getArreyListFromInputStreamFile
-				// TODO parseArreylist
-				
-				
-			}
 		}
 
-	}
+		for (ArrayList<String> i : manifest) {
 
+			if (i.isEmpty()) {
+				// bye bye
+
+			}
+			int success = 0;
+			while (!i.isEmpty() && success != 1) {
+				String str = null;
+				String path = new URL(str).getPath();
+
+				if (str.contains("-segment")) {
+					path = path.substring(0, path.length() - 9);
+					System.out.println(path);
+				//	logger.debug("String path after deleteing Suffixes is " + str);
+
+					// TODO download this path
+					// if download is success success=1
+				}
+				if (str.contains(".segments")) {
+					path = path.substring(0, path.length() - 9);
+					System.out.println(path);
+					//logger.debug("String path after deleteing Suffixes is " + str);
+
+					// TODO create manifestInputStream
+					// TODO getArreyListFromInputStreamFile
+					// TODO geMDtArreyListFromArrayList
+					// TODO parseArreylist
+
+				}
+
+			} // while
+
+		}
+
+	}//
+
+	
 }
