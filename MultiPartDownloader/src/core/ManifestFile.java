@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-public class ManifestFile 
+ 
+public class ManifestFile   
 {  
 	private String manifestFilePath = "";
 	public ManifestFile(String manifestFilePath) {
@@ -21,7 +21,7 @@ public class ManifestFile
 				fileFields.close(); 
 		} catch (FileNotFoundException e) {
 		    e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IOException e) { 
 				e.printStackTrace();
 			}
 		return fileFields;

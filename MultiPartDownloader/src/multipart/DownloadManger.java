@@ -4,15 +4,14 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
-
-public class DownloadManger { 
+ 
+public class DownloadManger {  
 	
 	public DownloadManger()
 	{
-		
 		}
 	//Open the URL of the Designated and Return its Input Data -Bytes- 
-	public static byte[] downloadURL(InputStream openedURL)
+			public static byte[] downloadURL(InputStream openedURL)
 	 		throws IOException, EOFException {
 	 		int sizeOfRead;
 	 		try {
