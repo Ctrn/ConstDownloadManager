@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import core.ManifestFile;
 
-public class Main extends JFrame {
+public class Main extends JFrame { 
    String filelist;
 	
    public static void main(String args[])
