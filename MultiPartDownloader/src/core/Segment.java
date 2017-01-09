@@ -33,8 +33,57 @@ public class Segment {
 	/*
 	 * Function to write the content of URL in a given segment into an output stream
 	 */
-	public void writeSegmentToStream(OutputStream output_stream) throws IOException{
-	// TODO	
+	public void writeSegmentToStream(OutputStream output_stream) throws Exception{
+		
+		InputStream input_stream= null;
+		boolean is_reachable_segment = false;
+		URLConnection url_conn = url.openConnection();
+		
+		input_stream = readStream(url_conn);
+		
+        if (input_stream != null) {
+        	is_reachable_segment = true;
+        	
+        }else{//do recursive on mirror_list until we find a reachible link
+        	
+        	for(int i=0; i<mirrors_list.size(); i++){
+      		  try {
+      			  mirrors_list.get(i).writeSegmentToStream(output_stream);
+      			  is_reachable_segment = true;
+      			  break;  
+      		  }
+      		  catch (Exception e)  {
+      			  logger.debug("core.segment.writeSegmentToStream; Error msg: " + e.getMessage());
+      			  //logger.error("Failed to get valid url mirror to download from it"); // no need as we are still recursing
+      		  }
+      	   }
+        	
+        	// terminate execution if all mirrors fails
+        	if(!is_reachable_segment) {
+     		   throw new Exception("Unreachable URL :" + url.toExternalForm());
+     	   }
+        }
+        
+        if(input_stream != null && is_reachable_segment) {
+	        try {
+	            int segSize = 0;
+		        int inputChar;
+		        while ((inputChar = input_stream.read()) != -1) {
+		        	output_stream.write(inputChar);
+		        	segSize++;	        	 
+		        }
+		       	        }
+	        catch (IOException e) {
+	        	logger.debug("core.segment.writeSegment; ToStreamException from downloading content " + e.getMessage()); 
+	        	throw e;
+	        }
+	        finally {
+	        	input_stream.close();
+	        }
+       }
+        else{
+        	throw new Exception (url.toString());
+        }
 	}
 	
 	private InputStream readStream(URLConnection url_conn){
@@ -53,6 +102,7 @@ public class Segment {
 	public void insertMirror(Segment segment){
 		this.mirrors_list.add(segment);
 	}
+	
 	/*
 	 * Getters and setters
 	 */ 
