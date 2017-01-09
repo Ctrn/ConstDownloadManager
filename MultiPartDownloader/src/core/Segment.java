@@ -49,27 +49,15 @@ public class Segment {
 			return null; 
 		}
 	}
+	
 	public void insertMirror(Segment segment){
 		this.mirrors_list.add(segment);
 	}
-	
 	/*
 	 * Getters and setters
-	 */
+	 */ 
 	public List<Segment> getMirrors() {
 		return mirrors_list;
-	}
-
-	public void setMirrors(List<Segment> mirrors) {
-		this.mirrors_list = mirrors;
-	}
-
-	public URL getUrl() {
-		return url;
-	}
-
-	public void setUrl(URL url) {
-		this.url = url;
 	}
 	
 }
