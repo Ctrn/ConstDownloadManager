@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+
 public class ManifestFileParserTest extends ManifestFileParser {
 	@Test
 	public void testFileInputStream() throws FileNotFoundException {

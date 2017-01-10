@@ -91,6 +91,7 @@ public class ManifestFileParser {
 				System.out.println(",");
 			}
 
+			
 		}
 	}
 
