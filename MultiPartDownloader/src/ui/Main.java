@@ -23,6 +23,9 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import multipart.Multipart;
+import sequnce.FileSequenceReader;
+
 
 /**
  * A program for downloading and previewing multi-part files
@@ -69,7 +72,15 @@ public class Main extends JFrame {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		startDownload();
+        		try {
+					startDownload();
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
         	}
         });
         stepButton = new JButton("Step");
@@ -125,8 +136,10 @@ public class Main extends JFrame {
 	 * Downloads and previews the entire stream if it's a normal file.
 	 * If it is a sequence file (with suffix .seq), downloads and previews
 	 * one file at a time.
+	 * @throws IOException 
+	 * @throws MalformedURLException 
 	 */
-	private void startDownload() {
+	private void startDownload() throws MalformedURLException, IOException {
     	finishDownload();
 
     	String url = urlField.getText();
@@ -152,13 +165,7 @@ public class Main extends JFrame {
 			fileType = "";
 		}
 
-//		try {
-//			//multipart = Multipart.openStream(url);
-//		} catch(IOException e) {
-//			e.printStackTrace();
-//			progressLabel.setText("Download failed.");
-//			return;
-//		}
+		multipart = Multipart.openStream(url);
 
 		if(!isSequence)
 			downloadSingleFile();
@@ -231,20 +238,20 @@ public class Main extends JFrame {
 	}
 	
 	private void downloadNextFileFromSequence() {
-//		try {
-//			byte[] data = FileSequenceReader.readOneFile(multipart);
-//			if(data!=null)
-//				preview(data);
-//			else { // no more sub-files
-//				progressLabel.setText("Sequence finished.");
-//				finishDownload();
-//			}
-//		}
-//		catch(IOException e) {
-//			e.printStackTrace();
-//			progressLabel.setText("Download failed.");
-//			finishDownload();
-//		}
+		try {
+			byte[] data = FileSequenceReader.readOneFile(multipart);
+			if(data!=null)
+				preview(data);
+			else { // no more sub-files
+				progressLabel.setText("Sequence finished.");
+				finishDownload();
+			}
+		} 
+		catch(IOException e) {
+			e.printStackTrace();
+			progressLabel.setText("Download failed.");
+			finishDownload();
+		}
 	}
 
 	private void preview(byte[] data) {
