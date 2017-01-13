@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.swing.text.Segment;
+
 import org.apache.log4j.Logger;
 
 public class ManifestFileParser {
@@ -81,7 +83,7 @@ public class ManifestFileParser {
 		return outer;
 	}
 
-	public static void printArraylist(ArrayList<ArrayList<String>> manifestFile) {
+	public  void printArraylist(ArrayList<ArrayList<String>> manifestFile) {
 
 		for (ArrayList<String> i : manifestFile) {
 			// System.out.println(i);
@@ -91,14 +93,13 @@ public class ManifestFileParser {
 				System.out.println(",");
 			}
 
-			
 		}
 	}
 
 	/*
 	 * Function To parse String Array list
 	 */
-	public static void parseArreylist(ArrayList<ArrayList<String>> manifest)
+	public  void parseArreylist(ArrayList<ArrayList<String>> manifest)
 			throws IOException {
 
 		
@@ -155,7 +156,6 @@ public class ManifestFileParser {
 					//System.out.println(str);
 					
 
-					
 					// TODO create manifestInputStream
 					// TODO getArreyListFromInputStreamFile
 					// TODO geMDtArreyListFromArrayList
