@@ -64,7 +64,7 @@ public class Main extends JFrame {
 	 * Creates a frame with controls for downloading and previewing multi-part files
 	 * and controls for animating file sequence streams.
 	 */
-	public Main() {
+	public Main() { 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Multi-part Downloader");
         
@@ -73,7 +73,9 @@ public class Main extends JFrame {
         startButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		try {
-					startDownload();
+        			
+        				startDownload();
+					 
 				} catch (MalformedURLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
