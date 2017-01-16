@@ -1,5 +1,8 @@
 package tests;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
@@ -7,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 
 import core.ManifestFileParser;
 
