@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import multipart.Multipart;
 
+
+
 /**
  * JUnit tests for the multipart downloader.
  */
@@ -18,8 +20,7 @@ public class MultipartTest {
 	 * then a valid InputStream should be returned, but should report
 	 * end-of-file for every read.
 	 */
-	@Test 
-	public void emptyFile() throws IOException {
+	@Test public void emptyFile() throws IOException {
 		InputStream in = Multipart.openStream("http://");
 
 		Assert.assertNotNull("null stream",
@@ -44,8 +45,7 @@ public class MultipartTest {
 	 * then a valid InputStream should be returned, but should report
 	 * end-of-file for every read.
 	 */
-	@Test 
-	public void emptyPartsFile() throws IOException {
+	@Test public void emptyPartsFile() throws IOException {
 		// the complexities of the parts file actually do most of the testing:
 		InputStream in = Multipart.openStream("http://");
 

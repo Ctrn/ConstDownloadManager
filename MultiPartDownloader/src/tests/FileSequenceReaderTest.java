@@ -19,9 +19,7 @@ public class FileSequenceReaderTest {
 	 * sub-file (not the same as zero sub-files!) and tests behavior on the
 	 * sequence.
 	 */
-
-	@Test
-	public void oneEmptyFile() throws IOException {
+	@Test public void oneEmptyFile() throws IOException {
 		InputStream sequence = new ByteArrayInputStream(new byte[]{0,0,0,0});
 		
 		Assert.assertArrayEquals("doesn't return zero-length sub-file",
