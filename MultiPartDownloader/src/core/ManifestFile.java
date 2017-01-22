@@ -14,7 +14,7 @@ public class ManifestFile
 {  
 	private String manifestFilePath = "";
 	private LinkedList<String> urlsOfSegments = new LinkedList<String>();
-	private final static String dalimater = "**";
+	private final static int dalimater = 2;
 	public ManifestFile(String manifestFilePath) {
 		this.manifestFilePath = manifestFilePath;
 	}
@@ -25,16 +25,27 @@ public class ManifestFile
 				BufferedReader buffer = new BufferedReader(
 					new InputStreamReader(url.openStream()));
 						String inputLine;
-						int count = 0;
 								while ((inputLine = buffer.readLine()) != null){
-									if(count%2 == 0){
+									if (inputLine.length() != dalimater){
 											urlsOfSegments.add(inputLine);
-											}
-											count++;
 									}
-										buffer.close();
 								}
-	public void getSegmentsOfFile(){
-		ManifestFileParser manParser = new ManifestFileParser(urlsOfSegments);
+										buffer.close();//close Buffer
+										//Get Segments URLS
+											ManifestFileParser manParser = new ManifestFileParser(urlsOfSegments);
+												LinkedList<String> pasredSegemntURLs = manParser.parseURL();//get the parsed segments Segments URL and there index
+													getSegmentsContants(pasredSegemntURLs);
+									}
+	//get List to TxtNode
+	public LinkedList<TxtNode> getSegmentsContants(LinkedList<String> pasredSegemntURLs)
+			throws IOException,MalformedURLException
+	{
+		LinkedList<TxtNode> txtNodes = new LinkedList<TxtNode>();
+		for (int i = 0 ; i < pasredSegemntURLs.size() ; i++){
+			txtNodes.add(new TxtNode(pasredSegemntURLs.get(i)));
+				txtNodes.get(i).readContntFromURL();
+		}
+		
+		return txtNodes;
 	}
 }

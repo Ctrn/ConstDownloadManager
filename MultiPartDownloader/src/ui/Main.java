@@ -149,7 +149,6 @@ public class Main extends JFrame {
 				isSequence = true;
 			if(path.endsWith(SEQ_SUFFIX)) { // note, then remove sequence type -seq
 				path = path.substring(0, path.length()-SEQ_SUFFIX.length());
-					
 							}
 			// file type is everything after last '.':
 				fileType = path.substring(path.lastIndexOf('.')+1);
@@ -175,7 +174,7 @@ public class Main extends JFrame {
 			ManifestFile manifestFile = new ManifestFile(url);
 				//Read File
 					manifestFile.readFile();
-	    	// timer will be started and delay set by animate()
+					// timer will be started and delay set by animate()
 		}
 	}
 	
