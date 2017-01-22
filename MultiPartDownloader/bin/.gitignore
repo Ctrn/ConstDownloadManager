@@ -1,1 +1,7 @@
 /core/
+/multipart/
+/sequnce/
+/tests/
+/ui/
+/FileSequenceReaderTest.class
+/MultipartTest.class
