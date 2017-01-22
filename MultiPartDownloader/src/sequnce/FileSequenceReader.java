@@ -25,6 +25,7 @@ public class FileSequenceReader {
 		// followed by the sub-file, followed by another size, followed by the
 		// sub-file,
 		// and so on until EOF
+<<<<<<< Upstream, based on origin/master
 		int size;
 		// note that this hides errors involving less than 4 trailing bytes:
 		try {
@@ -42,5 +43,25 @@ public class FileSequenceReader {
 			read += justRead;
 		}
 		return data;
+=======
+		int sizeOfStreamedSeq = 0;
+		 		// note that this hides errors involving less than 4 trailing bytes:
+		 		try {
+		 			sizeOfStreamedSeq = new DataInputStream(sequence).readInt();
+		 		} catch(EOFException e) { // no more sub-files
+		 			return null; 
+		 		}
+		 
+		 		byte[] streamData = new byte[sizeOfStreamedSeq];
+		 		int readData = 0;
+		 		while(readData<sizeOfStreamedSeq) {
+		 			int readedStreamData = sequence.read(streamData, readData, sizeOfStreamedSeq-readData);
+		 			if(readedStreamData==-1)
+		 				throw new EOFException("Stream end @: "+readedStreamData+" Bytes: "+sizeOfStreamedSeq+" -Byte of file!");
+		 					readData += readedStreamData;
+		 							}
+		 		return streamData;
+		 	}		 
+>>>>>>> 7794af7 Modifed Main,Parser and manfiset class
 	}
 }
