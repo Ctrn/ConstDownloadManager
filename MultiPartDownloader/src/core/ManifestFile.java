@@ -19,7 +19,7 @@ public class ManifestFile
 		this.manifestFilePath = manifestFilePath;
 	}
 	//Read File Stream
-	public  void readFile() throws IOException,MalformedURLException { // Return the Value of the Segments
+	public  LinkedList<TxtNode> readFile() throws IOException,MalformedURLException { // Return the Value of the Segments
 		final Logger logger = Logger.getLogger(ManifestFile.class);
 			URL url = new URL(manifestFilePath);
 				BufferedReader buffer = new BufferedReader(
@@ -34,7 +34,7 @@ public class ManifestFile
 										//Get Segments URLS
 											ManifestFileParser manParser = new ManifestFileParser(urlsOfSegments);
 												LinkedList<String> pasredSegemntURLs = manParser.parseURL();//get the parsed segments Segments URL and there index
-													getSegmentsContants(pasredSegemntURLs);
+													return getSegmentsContants(pasredSegemntURLs);
 									}
 	//get List to TxtNode
 	public LinkedList<TxtNode> getSegmentsContants(LinkedList<String> pasredSegemntURLs)
@@ -43,7 +43,6 @@ public class ManifestFile
 		LinkedList<TxtNode> txtNodes = new LinkedList<TxtNode>();
 		for (int i = 0 ; i < pasredSegemntURLs.size() ; i++){
 			txtNodes.add(new TxtNode(pasredSegemntURLs.get(i)));
-				txtNodes.get(i).readContntFromURL();
 		}
 		
 		return txtNodes;
