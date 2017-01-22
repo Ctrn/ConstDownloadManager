@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import core.ManifestFile;
+import core.TxtNode;
 import multipart.Multipart;
 import sequnce.FileSequenceReader;
 public class Main extends JFrame {
@@ -138,15 +140,17 @@ public class Main extends JFrame {
     	String url = urlField.getText();
     	
 		boolean isSequence = false;
+		boolean isManifest = false;
 		try {
 			String path = new URL(url).getPath();
 
 			if(path.endsWith(".cgi")) // ignore .cgi suffix
 				path = path.substring(0, path.length()-".cgi".length());
 			
-			if(path.endsWith(MANIFEST_SUFFIX)) // ignore metafile suffix .segments
+			if(path.endsWith(MANIFEST_SUFFIX)){ // ignore metafile suffix .segments
 				path = path.substring(0, path.length()-MANIFEST_SUFFIX.length());
-				isSequence = true;
+					isSequence = true;
+			}
 			if(path.endsWith(SEQ_SUFFIX)) { // note, then remove sequence type -seq
 				path = path.substring(0, path.length()-SEQ_SUFFIX.length());
 							}
@@ -155,26 +159,34 @@ public class Main extends JFrame {
 		} catch(MalformedURLException e) {
 			fileType = "";
 		}
-
+		int count = 0 ;
 		multipart = Multipart.openStream(url);
-		if(!isSequence)
+		if(!isSequence )
 			downloadSingleFile();
-		else {
+		else{
 			progressLabel.setText("Downloading sequence of files...");
 			stepButton.setEnabled(true);
 			animateSlider.setValue(0);
 			animateSlider.setEnabled(true);
 			sliderLabel.setEnabled(true);
-	    	timer = new Timer(1000, new ActionListener() {
-	    		public void actionPerformed(ActionEvent e) {
-	    			downloadNextFileFromSequence();
-	    		}
-	    	});
 			//Create  the initiate the manesfstfile and assign the value of the of the url
 			ManifestFile manifestFile = new ManifestFile(url);
 				//Read File
-					manifestFile.readFile();
+					LinkedList<TxtNode> SegmentsToShow = manifestFile.readFile();
+					String fileSegemnts = "";
+					for(int i=0 ; i< SegmentsToShow.size() ; i++){
+						fileSegemnts+="\n"+SegmentsToShow.get(i).readContntFromURL();
+						
+					}
+					textView.setText(fileSegemnts);
+					scrollPane.setViewportView(textView);
 					// timer will be started and delay set by animate()
+	    	timer = new Timer(1000, new ActionListener() {
+	    		public void actionPerformed(ActionEvent e) {	
+	    			System.out.println("Next");
+	    		}
+	    	});
+			
 		}
 	}
 	
