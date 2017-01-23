@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,18 +24,19 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import core.ManifestFile;
+import core.TxtNode;
 import multipart.Multipart;
 import sequnce.FileSequenceReader;
+<<<<<<< HEAD
 
 /**
  * A program for downloading and previewing multi-part files and file sequence
  * streams.
  */
+=======
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 public class Main extends JFrame {
-
-	/**
-	 * Creates an instance of Main on the UI thread.
-	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -146,9 +148,11 @@ public class Main extends JFrame {
 		String url = urlField.getText();
 
 		boolean isSequence = false;
+		boolean isManifest = false;
 		try {
 			String path = new URL(url).getPath();
 
+<<<<<<< HEAD
 			if (path.endsWith(".cgi")) // ignore .cgi suffix
 				path = path.substring(0, path.length() - ".cgi".length());
 
@@ -158,30 +162,70 @@ public class Main extends JFrame {
 			if (path.endsWith(SEQ_SUFFIX)) { // note, then remove sequence type
 				path = path.substring(0, path.length() - SEQ_SUFFIX.length());
 				isSequence = true;
+=======
+			if(path.endsWith(".cgi")) // ignore .cgi suffix
+				path = path.substring(0, path.length()-".cgi".length());
+			
+			if(path.endsWith(MANIFEST_SUFFIX)){ // ignore metafile suffix .segments
+				path = path.substring(0, path.length()-MANIFEST_SUFFIX.length());
+					isSequence = true;
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 			}
-
+			if(path.endsWith(SEQ_SUFFIX)) { // note, then remove sequence type -seq
+				path = path.substring(0, path.length()-SEQ_SUFFIX.length());
+							}
 			// file type is everything after last '.':
+<<<<<<< HEAD
 			fileType = path.substring(path.lastIndexOf('.') + 1);
 		} catch (MalformedURLException e) {
+=======
+				fileType = path.substring(path.lastIndexOf('.')+1);
+		} catch(MalformedURLException e) {
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 			fileType = "";
 		}
-
+		int count = 0 ;
 		multipart = Multipart.openStream(url);
+<<<<<<< HEAD
 
 		if (!isSequence)
+=======
+		if(!isSequence )
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 			downloadSingleFile();
-		else {
+		else{
 			progressLabel.setText("Downloading sequence of files...");
 			stepButton.setEnabled(true);
 			animateSlider.setValue(0);
 			animateSlider.setEnabled(true);
 			sliderLabel.setEnabled(true);
+<<<<<<< HEAD
 			timer = new Timer(1000, new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					downloadNextFileFromSequence();
 				}
 			});
 			// timer will be started and delay set by animate()
+=======
+			//Create  the initiate the manesfstfile and assign the value of the of the url
+			ManifestFile manifestFile = new ManifestFile(url);
+				//Read File
+					LinkedList<TxtNode> SegmentsToShow = manifestFile.readFile();
+					String fileSegemnts = "";
+					for(int i=0 ; i< SegmentsToShow.size() ; i++){
+						fileSegemnts+="\n"+SegmentsToShow.get(i).readContntFromURL();
+						
+					}
+					textView.setText(fileSegemnts);
+					scrollPane.setViewportView(textView);
+					// timer will be started and delay set by animate()
+	    	timer = new Timer(1000, new ActionListener() {
+	    		public void actionPerformed(ActionEvent e) {	
+	    			System.out.println("Next");
+	    		}
+	    	});
+			
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 		}
 	}
 
@@ -254,12 +298,23 @@ public class Main extends JFrame {
 	}
 
 	private void preview(byte[] data) {
+<<<<<<< HEAD
 
 		if (fileType.equalsIgnoreCase("jpg") || fileType.equalsIgnoreCase("gif") || fileType.equalsIgnoreCase("png")) {
 			imageView.setIcon(new ImageIcon(data));
 			scrollPane.setViewportView(imageView);
 		} else if (fileType.equalsIgnoreCase("txt")) {
+=======
+		
+		if(fileType.equalsIgnoreCase("jpg")||fileType.equalsIgnoreCase("gif")
+				||fileType.equalsIgnoreCase("png")) {
+					imageView.setIcon(new ImageIcon(data));
+						scrollPane.setViewportView(imageView);
+		}
+		else if(fileType.equalsIgnoreCase("txt")) {
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 			textView.setText(new String(data));
+<<<<<<< HEAD
 			scrollPane.setViewportView(textView);
 		} else {
 			textView.setText("[unknown file type]");
@@ -268,3 +323,13 @@ public class Main extends JFrame {
 	}
 
 }
+=======
+				scrollPane.setViewportView(textView);
+					}
+					else {
+						textView.setText("[unknown file type]");
+							scrollPane.setViewportView(textView);
+								}
+									}
+										}
+>>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
