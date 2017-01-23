@@ -5,7 +5,6 @@
  */
 package core;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,14 +22,12 @@ public class ManifestFileParser {
 	 * Function To convert inputStreamfile String ArrayList file
 	 */
 
-	public ArrayList<String> getArreyListFromInputStreamFile(
-			InputStream manifestFile) {
+	public ArrayList<String> getArreyListFromInputStreamFile(InputStream manifestFile) {
 
 		ArrayList<String> manifestArreyString = new ArrayList<String>();
 		String line;
 
-		BufferedReader r = new BufferedReader(new InputStreamReader(
-				manifestFile));
+		BufferedReader r = new BufferedReader(new InputStreamReader(manifestFile));
 		try {
 			while ((line = r.readLine()) != null) {
 
@@ -56,8 +53,7 @@ public class ManifestFileParser {
 	 * @return ArrayList<ArrayList<String>>
 	 */
 
-	public ArrayList<ArrayList<String>> geMDtArreyListFromArrayList(
-			ArrayList<String> manifestFile) {
+	public ArrayList<ArrayList<String>> geMDtArreyListFromArrayList(ArrayList<String> manifestFile) {
 
 		ArrayList<ArrayList<String>> outer = new ArrayList<ArrayList<String>>();
 		ArrayList<String> inner = new ArrayList<String>();
@@ -65,8 +61,7 @@ public class ManifestFileParser {
 		int j = 0;
 		for (int i = 0; i < manifestFile.size(); i++) {
 
-			while (i < manifestFile.size()
-					&& !(manifestFile.get(i).equals("**"))) {
+			while (i < manifestFile.size() && !(manifestFile.get(i).equals("**"))) {
 
 				inner.add(manifestFile.get(i));
 
@@ -84,7 +79,7 @@ public class ManifestFileParser {
 		return outer;
 	}
 
-	public  void printArraylist(ArrayList<ArrayList<String>> manifestFile) {
+	public void printArraylist(ArrayList<ArrayList<String>> manifestFile) {
 
 		for (ArrayList<String> i : manifestFile) {
 			// System.out.println(i);
@@ -100,10 +95,8 @@ public class ManifestFileParser {
 	/*
 	 * Function To parse String Array list
 	 */
-	public  void parseArreylist(ArrayList<ArrayList<String>> manifest)
-			throws IOException {
+	public void parseArreylist(ArrayList<ArrayList<String>> manifest) throws IOException {
 
-		
 		/**
 		 * main manifest empty
 		 */
@@ -112,39 +105,34 @@ public class ManifestFileParser {
 
 		}
 
-		
-		
 		/**
-		 * get the first array segment urls 
+		 * get the first array segment urls
 		 */
 		for (ArrayList<String> i : manifest) {
 
-			
 			/**
-			 * array segment urls EMPTY 
+			 * array segment urls EMPTY
 			 */
-			
+
 			if (i.isEmpty()) {
 				// bye bye
 
 			}
 			int success = 0;
 			int j = 0;
-			
+
 			/**
-			 * take every URL in this array and get the real path
-			 * then try to download it
-			 * if ok,then make success =1
+			 * take every URL in this array and get the real path then try to
+			 * download it if ok,then make success =1
 			 * 
 			 */
-			
+
 			Segment: while (!i.isEmpty() && success != 1) {
 
 				String str = i.get(j);
 				if (str.contains("-segment")) {
 					str = str.substring(0, str.length() - 9);
-					//System.out.println(str);
-					
+					// System.out.println(str);
 
 					// TODO download this path
 					// TODO if success download ,set success=1
@@ -154,8 +142,7 @@ public class ManifestFileParser {
 
 				if (str.contains(".segments")) {
 					str = str.substring(0, str.length() - 9);
-					//System.out.println(str);
-					
+					// System.out.println(str);
 
 					// TODO create manifestInputStream
 					// TODO getArreyListFromInputStreamFile
@@ -166,8 +153,8 @@ public class ManifestFileParser {
 
 				}
 
-			}// while
-		}// for
+			} // while
+		} // for
 	}// arraylsit of arry list
 
 }
