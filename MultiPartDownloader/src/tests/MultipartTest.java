@@ -23,6 +23,7 @@ public class MultipartTest {
 		InputStream in = Multipart.openStream("http://ec2-54-186-190-13.us-west-2.compute.amazonaws.com:8080/MultiDownDATA/BadSeperator/md.segments");
 
 		Assert.assertNotNull("null stream", in);
+		
 		// (would have gotten a NullPointerException soon anyway, but doesn't
 		// hurt to be explicit.)
 
