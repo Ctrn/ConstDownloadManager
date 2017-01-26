@@ -31,9 +31,14 @@ public class ImageNode implements Segment{
 		// Get Image Path
 		URL imagePath = openURL();
 				// Get BufferedImage
-		      		imageContent = ImageIO.read(imagePath); 
+		      		if(isFileToRead()){
+		      			imageContent = ImageIO.read(imagePath); 
 		      			logger.trace("Image Segment Of  URL: "+imageURL+" is Buffered");
-		      				return new ImageIcon(imageContent);
+		      		}
+		      		else if(isASequnce()){
+		      			//TO DO 
+		      		}
+		      		return new ImageIcon(imageContent);
 	}
 	
 	@Override
