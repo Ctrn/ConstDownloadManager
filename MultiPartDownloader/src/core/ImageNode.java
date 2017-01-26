@@ -1,17 +1,22 @@
 package core;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
 
 public class ImageNode implements Segment{
 	
 	private String imageURL = ""; 
-	private String imageContent = ""; 
+	private BufferedImage imageContent = null; 
 	
 	private final static String[] fileTypeToRead = {"jpeg","png","gif"};
 	private final static String sequnceType = "-seq";
@@ -19,11 +24,16 @@ public class ImageNode implements Segment{
 	public ImageNode(String imageURL){
 		this.imageURL = imageURL;
 	}
-	
+
 	final Logger logger = Logger.getLogger(ImageNode.class);
 	
-	public String readContntFromURL() throws  IOException,MalformedURLException{
-		return "";
+	public ImageIcon readContntFromURL() throws  IOException,MalformedURLException{
+		// Get Image Path
+		URL imagePath = openURL();
+				// Get BufferedImage
+		      		imageContent = ImageIO.read(imagePath); 
+		      			logger.trace("Image Segment Of  URL: "+imageURL+" is Buffered");
+		      				return new ImageIcon(imageContent);
 	}
 	
 	@Override
