@@ -9,11 +9,20 @@ import java.net.URL;
 public class ManifestFile {
 	private String manifestFilePath = "";
 
+	/**
+	 * 
+	 * @param manifestFilePath
+	 */
+
 	public ManifestFile(String manifestFilePath) {
 		this.manifestFilePath = manifestFilePath;
 	}
 
 	// File Streaming
+	/**
+	 * 
+	 * @return fileFields
+	 */
 	public InputStream fetchFileFromPath() {
 		InputStream fileFields = null;
 		try {

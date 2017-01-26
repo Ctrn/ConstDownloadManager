@@ -18,8 +18,10 @@ import org.apache.log4j.Logger;
 
 public class ManifestFileParser {
 
-	/*
-	 * Function To convert inputStreamfile String ArrayList file
+	/**
+	 * 
+	 * @param manifestFile
+	 * @return manifestArreyString
 	 */
 
 	public ArrayList<String> getArreyListFromInputStreamFile(InputStream manifestFile) {
@@ -79,6 +81,10 @@ public class ManifestFileParser {
 		return outer;
 	}
 
+	/**
+	 * 
+	 * @param manifestFile
+	 */
 	public void printArraylist(ArrayList<ArrayList<String>> manifestFile) {
 
 		for (ArrayList<String> i : manifestFile) {

@@ -35,6 +35,11 @@ public class Segment {
 	 * Function to write the content of URL in a given segment into an output
 	 * stream
 	 */
+	/**
+	 * 
+	 * @param output_stream
+	 * @throws Exception
+	 */
 	public void writeSegmentToStream(OutputStream output_stream) throws Exception {
 
 		InputStream input_stream = null;
@@ -85,6 +90,11 @@ public class Segment {
 		}
 	}
 
+	/**
+	 * 
+	 * @param url_conn
+	 * @return
+	 */
 	private InputStream readStream(URLConnection url_conn) {
 		try {
 			logger.debug("Success: Connecting and reading URL " + url_conn);

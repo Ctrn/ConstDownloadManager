@@ -12,6 +12,13 @@ public class Multipart {
 
 	// Open the Stream by the Assigned url and return the Input Stream of the
 	// File
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 * @throws MalformedURLException
+	 */
 	public static InputStream openStream(String url) throws IOException, MalformedURLException {
 		final Logger logger = Logger.getLogger(Multipart.class);
 		InputStream input = null; // intalization of input stream
@@ -21,9 +28,15 @@ public class Multipart {
 												// url
 		}
 		return input;
-	
 
 	}
+
+	/**
+	 * validateURL
+	 * 
+	 * @param url
+	 * @return true/false
+	 */
 
 	public static boolean validateURL(String url) {
 		try {
