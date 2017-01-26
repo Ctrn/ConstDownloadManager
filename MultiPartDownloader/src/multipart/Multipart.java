@@ -9,7 +9,7 @@ import java.net.URLConnection;
 import org.apache.log4j.Logger;
 
 public class Multipart {
-<<<<<<< HEAD
+
 	// Open the Stream by the Assigned url and return the Input Stream of the
 	// File
 	public static InputStream openStream(String url) throws IOException, MalformedURLException {
@@ -21,17 +21,8 @@ public class Multipart {
 												// url
 		}
 		return input;
-=======
-	//Open the Stream by the Assigned url and return the Input Stream of the File
-	public static InputStream openStream(String url) throws IOException,MalformedURLException {
-	final Logger logger = Logger.getLogger(Multipart.class);
-		InputStream input = null ; //intalization of input stream 
-			if (validateURL(url)) {//Vaild URL to be opened
-				logger.trace("Success Opening Stream for: "+url);
- 				input = new URL(url).openStream();//open the stream based on the url	
-					}
- 				return input;		
->>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
+	
+
 	}
 
 	public static boolean validateURL(String url) {

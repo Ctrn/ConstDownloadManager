@@ -1,5 +1,4 @@
 package core;
-<<<<<<< HEAD
 
 /*
  * Purpose is to convert a string url that represents a downloadable link into an object 
@@ -9,14 +8,13 @@ package core;
  */
 import java.util.ArrayList;
 import java.util.List;
-=======
->>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
-public interface Segment {
+import java.net.URL;
+import java.net.URLConnection;
 
-<<<<<<< HEAD
 import org.apache.log4j.Logger;
 
 public class Segment {
@@ -111,8 +109,4 @@ public class Segment {
 		return mirrors_list;
 	}
 
-=======
-	public  String readContntFromURL() throws IOException,MalformedURLException;
-	public  boolean checkFileType(String url);
->>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 }

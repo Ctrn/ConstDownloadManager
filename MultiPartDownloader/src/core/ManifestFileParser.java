@@ -1,6 +1,10 @@
+/*
+ * Class to parse a Manifest file 
+ * Date Created: 1/1/2017
+ * Author: Hanan Namrouti 
+ */
 package core;
 
-<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,12 +15,8 @@ import java.util.ArrayList;
 import javax.swing.text.Segment;
 
 import org.apache.log4j.Logger;
-=======
-import java.util.LinkedList;
->>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 
 public class ManifestFileParser {
-<<<<<<< HEAD
 
 	/*
 	 * Function To convert inputStreamfile String ArrayList file
@@ -138,15 +138,7 @@ public class ManifestFileParser {
 					// TODO if success download ,set success=1
 					j++;
 					break Segment;
-=======
-	private LinkedList<String> segmentsURL = new LinkedList<String>();
-	private LinkedList<String> segmentsParsedURLs = new LinkedList<String>();
-	private final static String dalimter = ".part";
-		public ManifestFileParser(LinkedList<String> segmentsURL) {
-			this.segmentsURL = segmentsURL;
->>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 				}
-<<<<<<< HEAD
 
 				if (str.contains(".segments")) {
 					str = str.substring(0, str.length() - 9);
@@ -165,20 +157,4 @@ public class ManifestFileParser {
 		} // for
 	}// arraylsit of arry list
 
-=======
-		public LinkedList<String> parseURL()
-		{
-			int i;
-				int numberOfSegments = segmentsURL.size();
-					if (numberOfSegments != 0) { 
-						for( i = 0 ; i < numberOfSegments ; i++  ){
-						segmentsParsedURLs.add(
-								segmentsURL.get(i).substring(0,segmentsURL.get(i).lastIndexOf('.'))
-												);		
-							}
-					}
-					return segmentsParsedURLs;
-		}
-		 
->>>>>>> branch 'master' of https://github.com/Ctrn/ConstDownloadManager.git
 }
