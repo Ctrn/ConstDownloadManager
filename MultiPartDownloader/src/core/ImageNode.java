@@ -1,7 +1,9 @@
 package core;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,14 +11,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
 
+import sequnce.FileSequenceReader;
+
 public class ImageNode implements Segment{
 	
 	private String imageURL = ""; 
-	private BufferedImage imageContent = null; 
+	private Image imageContent = null; 
 	
 	private final static String[] fileTypeToRead = {"jpeg","png","gif"};
 	private final static String sequnceType = "-seq";
@@ -27,18 +32,19 @@ public class ImageNode implements Segment{
 
 	final Logger logger = Logger.getLogger(ImageNode.class);
 	
-	public ImageIcon readContntFromURL() throws  IOException,MalformedURLException{
+	public byte[] readContntFromURL() throws  IOException,MalformedURLException{
 		// Get Image Path
 		URL imagePath = openURL();
-				// Get BufferedImage
-		      		if(isFileToRead()){
-		      			imageContent = ImageIO.read(imagePath); 
-		      			logger.trace("Image Segment Of  URL: "+imageURL+" is Buffered");
-		      		}
-		      		else if(isASequnce()){
-		      			//TO DO 
-		      		}
-		      		return new ImageIcon(imageContent);
+		InputStream imageData = imagePath.openStream();
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+		int nRead;
+		byte[] data = new byte[163804];
+		while ((nRead = imageData.read(data, 0, data.length)) != -1) {
+		  buffer.write(data, 0, nRead);
+		}
+		buffer.flush();
+		return buffer.toByteArray();
 	}
 	
 	@Override
@@ -62,7 +68,7 @@ public class ImageNode implements Segment{
 	@Override
 	public boolean isASequnce() {
 		String fileType = imageURL.substring(imageURL.lastIndexOf("-"));
-		logger.trace("Nested Sequnce..");
-			return sequnceType.equalsIgnoreCase(fileType);
+			logger.trace("Nested Sequnce..");
+				return sequnceType.equalsIgnoreCase(fileType);
 	}
 }

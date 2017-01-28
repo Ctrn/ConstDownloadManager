@@ -43,15 +43,33 @@ public class ManifestFile
 														return getSegmentsContants(pasredSegemntURLs);
 															}
 	//get List to TxtNode
-	public LinkedList<TxtNode> getSegmentsContants(LinkedList<String> pasredSegemntURLs)
-			throws IOException,MalformedURLException
+	public LinkedList getSegmentsContants(LinkedList<String> pasredSegemntURLs)
 	{
+		LinkedList segmentToreturn = null;
+		if(fileType.equalsIgnoreCase("txt")){
+			segmentToreturn =  getTextSegemnts(pasredSegemntURLs);
+		}else if(fileType.equalsIgnoreCase("png") || fileType.equalsIgnoreCase("jpeg") 
+				|| fileType.equalsIgnoreCase("gif")){
+			segmentToreturn =  getImageSegemnts(pasredSegemntURLs);
+		}
+		return segmentToreturn;
+	}
+	//get List OF TextFile
+	public LinkedList getTextSegemnts(LinkedList<String> pasredSegemntURLs){
 		LinkedList<TxtNode> txtNodes = new LinkedList<TxtNode>();
 		for (int i = 0 ; i < pasredSegemntURLs.size() ; i++){
 				txtNodes.add(new TxtNode(pasredSegemntURLs.get(i)));
 			}
 		return txtNodes;
 	}
+	//get part of An image
+		public LinkedList getImageSegemnts(LinkedList<String> pasredSegemntURLs){
+			LinkedList<ImageNode> imageNodes = new LinkedList<ImageNode>();
+			for (int i = 0 ; i < pasredSegemntURLs.size() ; i++){
+					imageNodes.add(new ImageNode(pasredSegemntURLs.get(i)));
+				}
+			return imageNodes;
+		}
 	
 	
 }
