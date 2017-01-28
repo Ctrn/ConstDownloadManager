@@ -28,7 +28,6 @@ public class FileSequenceReader {
 		 		} catch(EOFException e) { // no more sub-files
 		 			return null; 
 		 		}
-		  
 		 		byte[] streamData = new byte[sizeOfStreamedSeq];
 		 		int readData = 0;
 		 		while(readData<sizeOfStreamedSeq) {

@@ -47,18 +47,16 @@ public class Main extends JFrame {
 	private JSlider animateSlider;
 	private JLabel sliderLabel;
 	private JButton stepButton;
-
+	private int count = 0;
+	private LinkedList<ImageNode> segmentsToSlide = null;
+	private LinkedList<TxtNode> segmentsToSlideText = null;
 	private Timer timer;
 	private InputStream multipart;
 	private String fileType;
 	
 	private static final String SEQ_SUFFIX = "-seq";
 	private static final String MANIFEST_SUFFIX = ".segments";
-	
-	/**
-	 * Creates a frame with controls for downloading and previewing multi-part files
-	 * and controls for animating file sequence streams.
-	 */
+
 	public Main() { 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Multi-part Downloader");
@@ -68,9 +66,7 @@ public class Main extends JFrame {
         startButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		try {
-        			
-        				startDownload();
-					 
+        				startDownload();	 
 				} catch (MalformedURLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -84,7 +80,40 @@ public class Main extends JFrame {
         stepButton.setEnabled(false);
         stepButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		downloadNextFileFromSequence();
+        		count++;
+        		//Check Size of Slide Show
+        		int sizeOfList = 0;
+        		String textData = "";
+        		byte[] imageData = null;
+        		if(fileType.equalsIgnoreCase("txt")){
+        			sizeOfList = segmentsToSlideText.size();
+        		}else{
+        			sizeOfList = segmentsToSlide.size();
+        		}
+        		//If counter didnt of slides end
+        		if (count < sizeOfList){
+        		try {
+        			if(fileType.equalsIgnoreCase("txt")){
+        				textData  = segmentsToSlideText.get(count).readContntFromURL();
+        				
+        			}
+        			else{
+        				imageData = segmentsToSlide.get(count).readContntFromURL();
+        				
+        			}
+        			if(fileType.equalsIgnoreCase("txt"))
+        			{
+        				textView.setText(textData);
+        			}else{
+        				imageView.setIcon(new ImageIcon(imageData));
+        			}
+					progressLabel.setText("Segment Downloaded:"+(count+1));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				scrollPane.setViewportView(imageView);	
+        		}
         	}
         });
         sliderLabel = new JLabel("Animation Speed:");
@@ -123,26 +152,19 @@ public class Main extends JFrame {
         controlPanel.add(urlPanel,BorderLayout.CENTER);
         controlPanel.add(controls,BorderLayout.EAST);
         add(controlPanel, BorderLayout.SOUTH);
-        add(scrollPane, BorderLayout.CENTER);
-        
+        add(scrollPane, BorderLayout.CENTER);   
         setSize(600,400);
 	}
-
-	/**
-	 * Begins the download.
-	 * Downloads and previews the entire stream if it's a normal file.
-	 * If it is a sequence file (with suffix .seq), downloads and previews
-	 * one file at a time.
-	 * @throws IOException 
-	 * @throws MalformedURLException 
-	 */
+	
 	private void startDownload() throws MalformedURLException, IOException {
     	finishDownload();
 
     	String url = urlField.getText();
     	
 		boolean isSequence = false;
+		boolean isSlide = false;
 		boolean isManifest = false;
+		
 		try {
 			String path = new URL(url).getPath();
 
@@ -155,21 +177,21 @@ public class Main extends JFrame {
 			}
 			if(path.endsWith(SEQ_SUFFIX)) { // note, then remove sequence type -seq
 				path = path.substring(0, path.length()-SEQ_SUFFIX.length());
-							}
-			// file type is everything after last '.':
+				isSlide = true;
+					}
 				fileType = path.substring(path.lastIndexOf('.')+1);
 		} catch(MalformedURLException e) {
 			fileType = "";
 		}
-		int count = 0 ;
+		
 		multipart = Multipart.openStream(url);
 		if(!isSequence )
 			downloadSingleFile();
-		else{
+		else if(!isSlide){
 			progressLabel.setText("Downloading sequence of files...");
-			stepButton.setEnabled(true);
+			stepButton.setEnabled(false);
 			animateSlider.setValue(0);
-			animateSlider.setEnabled(true);
+			animateSlider.setEnabled(false);
 			sliderLabel.setEnabled(true);
 			//Create  the initiate the manesfstfile and assign the value of the of the url
 			ManifestFile manifestFile = new ManifestFile(url, fileType);
@@ -184,28 +206,41 @@ public class Main extends JFrame {
 					scrollPane.setViewportView(textView);
 				}else if(fileType.equalsIgnoreCase("png") || fileType.equalsIgnoreCase("jpeg") 
 						|| fileType.equalsIgnoreCase("gif")){
-					LinkedList<ImageNode> SegmentsToShow = manifestFile.readFile();
-					int byteBufferSize = 0;
-					for(int i  = 0 ; i < SegmentsToShow.size() ; i++ ){
-						byteBufferSize += SegmentsToShow.get(i).readContntFromURL().length;
-					}
-					ByteBuffer buffredFile = ByteBuffer.allocate(byteBufferSize);
-						for(int i  = 0 ; i < SegmentsToShow.size() ; i++ ){
-							buffredFile.put(SegmentsToShow.get(i).readContntFromURL());
-						}
-							imageView.setIcon(new ImageIcon(buffredFile.array()));
-									scrollPane.setViewportView(imageView);
+							LinkedList<ImageNode> SegmentsToShow = manifestFile.readFile();
+							int byteBufferSize = 0;
+							for(int i  = 0 ; i < SegmentsToShow.size() ; i++ ){
+								byteBufferSize += SegmentsToShow.get(i).readContntFromURL().length;
+							}
+							ByteBuffer buffredFile = ByteBuffer.allocate(byteBufferSize);
+								for(int i  = 0 ; i < SegmentsToShow.size() ; i++ ){
+									buffredFile.put(SegmentsToShow.get(i).readContntFromURL());
+										}
+									imageView.setIcon(new ImageIcon(buffredFile.array()));
+											scrollPane.setViewportView(imageView);
 				}
-				// timer will be started and delay set by animate()
-				timer = new Timer(1000, new ActionListener() {
-	    		public void actionPerformed(ActionEvent e) {	
-	    			System.out.println("Next");
-	    		}
-	    	});
-			
+					
+		}
+		else if(isSlide){
+			//is A Slide Show
+			progressLabel.setText("Downloading sequence of files...");
+			stepButton.setEnabled(true);
+			animateSlider.setValue(0);
+			animateSlider.setEnabled(true);
+			sliderLabel.setEnabled(true);
+			//Animate the Sequence 
+				ManifestFile manifestFileToSlide = new ManifestFile(url, fileType);
+					if(fileType.equalsIgnoreCase("jpg")|| fileType.equalsIgnoreCase("png")
+							|| fileType.equalsIgnoreCase("jpeg")|| fileType.equalsIgnoreCase("gif")){
+					segmentsToSlide = manifestFileToSlide.readFile();
+					imageView.setIcon(new ImageIcon(segmentsToSlide.get(0).readContntFromURL()));
+					scrollPane.setViewportView(imageView);
+					}else if(fileType.equalsIgnoreCase("txt")){
+						segmentsToSlideText = manifestFileToSlide.readFile();
+						textView.setText(segmentsToSlideText.get(0).readContntFromURL());
+					}
+					progressLabel.setText("Segment Downloaded:"+(count+1));
 		}
 	}
-	
 	/**
 	 * Adjusts the animation timer based on the animation slider.
 	 * This includes starting or stopping the timer, if necessary.
@@ -259,7 +294,7 @@ public class Main extends JFrame {
 		}
 	}
 	
-	private void downloadNextFileFromSequence() {
+	private void downloadNextFileFromSequence(){
 		try {
 			byte[] data = FileSequenceReader.readOneFile(multipart);
 			if(data!=null)

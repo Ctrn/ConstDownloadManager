@@ -6,5 +6,5 @@ public interface Segment {
 
 	public  URL openURL() throws IOException,MalformedURLException;
 	public  boolean  isFileToRead();
-	public boolean isASequnce();
+	public  boolean  isASequnce();
 }

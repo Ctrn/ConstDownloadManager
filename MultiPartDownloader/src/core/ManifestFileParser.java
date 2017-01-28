@@ -26,8 +26,8 @@ public class ManifestFileParser {
 						for( i = 0 ; i < numberOfSegments ; i++  ){
 							if(check404ForURL(segmentsURL.get(i))){
 								segmentsParsedURLs.add(segmentsURL.get(i));
-								System.out.println("In Parser: "+segmentsURL.get(i));
-							}
+									System.out.println("In Parser: "+segmentsURL.get(i));
+									}
 								
 							}
 					}

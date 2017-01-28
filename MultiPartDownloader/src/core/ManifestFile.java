@@ -32,7 +32,7 @@ public class ManifestFile
 						String inputLine;
 								while ((inputLine = buffer.readLine()) != null){
 									if (!inputLine.toString().equalsIgnoreCase(dalimater)){
-											urlsOfSegments.add(inputLine);
+												urlsOfSegments.add(inputLine);
 												}
 													}
 										buffer.close();
@@ -48,7 +48,7 @@ public class ManifestFile
 		LinkedList segmentToreturn = null;
 		if(fileType.equalsIgnoreCase("txt")){
 			segmentToreturn =  getTextSegemnts(pasredSegemntURLs);
-		}else if(fileType.equalsIgnoreCase("png") || fileType.equalsIgnoreCase("jpeg") 
+		}else if(fileType.equalsIgnoreCase("png") || fileType.equalsIgnoreCase("jpeg") || fileType.equalsIgnoreCase("jpg") 
 				|| fileType.equalsIgnoreCase("gif")){
 			segmentToreturn =  getImageSegemnts(pasredSegemntURLs);
 		}
@@ -70,6 +70,6 @@ public class ManifestFile
 				}
 			return imageNodes;
 		}
-	
+	//Get the next segments
 	
 }
