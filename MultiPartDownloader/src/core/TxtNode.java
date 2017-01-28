@@ -19,22 +19,17 @@ public class TxtNode implements Segment{
 	public TxtNode(String segmentURL){
 		this.segmentURL = segmentURL;
 	}
-	
 	final Logger logger = Logger.getLogger(TxtNode.class);
 	
 	public String readContntFromURL() throws  IOException,MalformedURLException{
-		if(isFileToRead()){
 		URL segmentPath = openURL();
 			BufferedReader buffer = new BufferedReader(
 					new InputStreamReader(segmentPath.openStream()));
 						String inputLine;
 							while ((inputLine = buffer.readLine()) != null){
-								segmentContent += inputLine;
+								segmentContent += "\n"+inputLine;						
 									}	
-			}
-		else if(isASequnce()){
-			//TO DO
-		}
+		
 			return segmentContent;
 	}
 	@Override
@@ -51,7 +46,7 @@ public class TxtNode implements Segment{
 	}
 	@Override
 	public boolean isASequnce() {
-		String fileType = segmentURL.substring(segmentURL.lastIndexOf(".")+1);
+		String fileType = segmentURL.substring(0,segmentURL.lastIndexOf("-"));
 			logger.trace("Nested Sequnce..");
 				return sequnceType.equalsIgnoreCase(fileType);
 	}

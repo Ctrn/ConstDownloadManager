@@ -33,14 +33,13 @@ public class ManifestFile
 								while ((inputLine = buffer.readLine()) != null){
 									if (!inputLine.toString().equalsIgnoreCase(dalimater)){
 											urlsOfSegments.add(inputLine);
-											System.out.println(inputLine);
 												}
 													}
 										buffer.close();
 										//Get Segments URLS
 											ManifestFileParser manParser = new ManifestFileParser(urlsOfSegments);
 												LinkedList<String> pasredSegemntURLs = manParser.parseURL();//get the parsed segments Segments URL and there index
-												logger.trace("Read Of file "+manifestFilePath+"Continte Provided");	
+													logger.trace("Read Of file "+manifestFilePath+"Continte Provided");	
 														return getSegmentsContants(pasredSegemntURLs);
 															}
 	//get List to TxtNode
