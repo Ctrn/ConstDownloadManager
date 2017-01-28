@@ -1,0 +1,20 @@
+Source Code on GitHub:https://github.com/Ctrn/ConstDownloadManager/tree/master/MultiPartDownloader
+Group Wiki: https://sites.google.com/site/downloadmanagerproject/
+
+Deliverable 1: Design Document https://docs.google.com/document/d/1Y3S1iacV6dy4Qdjz_n8_cosU5j1_2lCNLdO3E9m4zKs/edit
+Deliverable 2:
+	Documentation https://docs.google.com/document/d/1HOAzapKmK8Q5iJPv2utbCISX1AQBorOlDLUyMfkkbYE/edit
+	Source Code on GitHub https://github.com/Ctrn/ConstDownloadManager/tree/master/MultiPartDownloader
+	Server Instances http://ec2-54-186-190-13.us-west-2.compute.amazonaws.com:8080/manager/html/
+Project Update: Compression and GUI
+Source Code on GitHub https://github.com/Ctrn/ConstDownloadManager/tree/master/MultiPartDownloader
+
+JavaDoc https://hanannamrouti.github.io/JavaDoc/
+
+Bugzilla and BugList http://www.bugheaven.com/bugzilla/ConstructionGroupBZU/
+Credentials for logging to Bug Heaven- BugZilla: http://www.bugheaven.com/bugzilla/ConstructionGroupBZU/buglist.cgi?bug_status=__open__&list_id=15&order=relevance%20desc&query_format=specific
+
+
+Link http://www.bugheaven.com/bugzilla/ConstructionGroupBZU/
+User Name aafaneh@birzeit.edu
+Password aafaneh@birzeit.edu
